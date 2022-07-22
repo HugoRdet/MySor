@@ -1,20 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet,SafeAreaView, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+
+import Get_Cal from './feed/get_Cal.js';
+import Init_DB from './feed/init_DB.js'
+
+import { styles } from "./Style";
+
 
 export default function App() {
+  
+  const [page_id, setpage_id] = useState(0); //0 calendrier //1 liens
+  
+  
+  Init_DB();
+  
+  
+  
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+    <SafeAreaView style={{ flex:0, backgroundColor: 'black' }} />
+    <SafeAreaView style={{ flex:1, backgroundColor: 'white' }} >
+      <StatusBar style="light" />
+      <View style={styles.MainComponent}>
+      <Get_Cal/>
+      </View>
+    
+    
+    </SafeAreaView>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  
