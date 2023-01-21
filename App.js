@@ -36,22 +36,36 @@ export default function App() {
         </Text>
 
         <View style={styles.maincompLinks}>
+        <Pressable onPress={()=>{openURL("https://www-master.ufr-info-p6.jussieu.fr/2020/?page=mesNotes")}} style={styles.link} >
+          <Text  style={styles.linktext}>
+            Get your grades
+          </Text>
+        </Pressable>
+        
+        <Pressable onPress={()=>{openURL("https://buresa.sorbonne-universite.fr/ReservationSalles/Default.aspx")}} style={styles.link} >
+          <Text style={styles.linktext}>
+            Buresa
+          </Text>
+        </Pressable>
+
         <Pressable onPress={()=>{openURL("https://discord.gg/7cvvBPj5t7")}} style={styles.link}> 
-      
           <Text style={styles.linktext}>
             Join the Discord server
           </Text>
-          </Pressable>
-          <Pressable onPress={()=>{openURL("https://www-master.ufr-info-p6.jussieu.fr/2020/?page=mesNotes")}} style={styles.link} >
-            <Text  style={styles.linktext}>
-              Get your grades
-            </Text>
-          </Pressable>
-          <Pressable onPress={()=>{openURL("https://github.com/HugoRdet/MySor")}} style={styles.link} >
-            <Text style={styles.linktext}>
-              Contribute on Git!
-            </Text>
-          </Pressable>
+        </Pressable>
+
+        <Pressable onPress={()=>{openURL("https://zcs.sorbonne-universite.fr")}} style={styles.link} >
+          <Text style={styles.linktext}>
+            Mail
+          </Text>
+        </Pressable>
+
+        <Pressable onPress={()=>{openURL("https://github.com/HugoRdet/MySor")}} style={styles.link} >
+          <Text style={styles.linktext}>
+            Contribute on Git!
+          </Text>
+        </Pressable>
+
         </View>
         
       </View>

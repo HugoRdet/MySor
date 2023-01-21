@@ -115,7 +115,11 @@ export default function Get_Cal() {
             let placed= false;
 
             for (let j=0;j<res_array[tmp_index_elem].events.length;j++){
-              if ((Event_title[0]===res_array[tmp_index_elem].events[j].title)||(Event_title[1]===res_array[tmp_index_elem].events[j].title)){
+              if (Event_title.length==1){
+                break;
+              }
+
+              if ((Event_title[0]===res_array[tmp_index_elem].events[j].title)||(Event_title[1]===res_array[tmp_index_elem].events[j].title)||(Event_title[2]===res_array[tmp_index_elem].events[j].SUMMARY)){
                 res_array[tmp_index_elem].events[j].events.push({SUMMARY:Event_title[Event_title.length-1],LOCATION:element.LOCATION,DTSTART:element.DTSTART,DTEND:element.DTEND})
                 placed=true;
                 break;
@@ -461,7 +465,7 @@ export default function Get_Cal() {
       let prec_date=new Date(value)  
       let dif=maintenant.getTime()-prec_date.getTime()
       
-      if (Math.floor((dif/1000)/60)>=1){
+      if (Math.floor((dif/1000)/60)>=30){
         storeData("@date_de_chargement_"+master_id+"_"+master_lvl,String(maintenant.toISOString()))
         setShow(false)
         console.log("rechargement de la BD "+master_id+" "+master_lvl)
@@ -486,7 +490,6 @@ export default function Get_Cal() {
   //rechargement des BD
   useEffect(() => {
     precdate_v.current=date_v;
-    console.log("date_v",date_v)
   }, [date_v]);
   
 
@@ -540,11 +543,11 @@ export default function Get_Cal() {
             {element.events.map((tmp_elem)=>{
 
               return(
-              <View style={{ flexDirection : "row",marginTop:10}} key={item.item.date+" "+element.title+"   "+tmp_elem.SUMMARY+"  "+tmp_elem.LOCATION}>
+              <View style={{ flexDirection : "row",marginTop:10}} key={item.item.date+" "+element.title+"   "+tmp_elem.SUMMARY+"  "+tmp_elem.LOCATION+"  "+tmp_elem.DTSTART.getHours()}>
                 
                 <View style={{ flexDirection : "column",marginTop:2,marginRight:30}}>
-                  <Text style={CalendarMainCompStyle.Time}> {tmp_elem.DTSTART.getHours()}h{tmp_elem.DTSTART.getMinutes()}{tmp_elem.DTSTART.getMinutes()===0?0:<></>}</Text>
-                  <Text style={CalendarMainCompStyle.Time}> {tmp_elem.DTEND.getHours()}h{tmp_elem.DTEND.getMinutes()}{tmp_elem.DTSTART.getMinutes()===0?0:<></>}</Text>
+                  <Text style={CalendarMainCompStyle.Time}> {tmp_elem.DTSTART.getHours()}h{tmp_elem.DTSTART.getMinutes()}{tmp_elem.DTSTART.getMinutes()==0?"0":<></>}</Text>
+                  <Text style={CalendarMainCompStyle.Time}> {tmp_elem.DTEND.getHours()}h{tmp_elem.DTEND.getMinutes()}{tmp_elem.DTEND.getMinutes()==0?"0":<></>}</Text>
                 </View>
                 <View style={{ flexDirection : "column",marginTop:2}}>
                 <Text style={CalendarMainCompStyle.Summary}>{tmp_elem.SUMMARY}</Text>

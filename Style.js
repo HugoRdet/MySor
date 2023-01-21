@@ -31,7 +31,11 @@ maincompLinks:{
   justifyContent :'flex-end',
   marginBottom : 40,
 },
-
+imageB:{
+  zIndex: -1,
+  flex:1,
+  justifyContent: "center",
+},
 Title:{
   fontSize:25,
   letterSpacing:1,
@@ -53,17 +57,18 @@ link:{
   marginRight : 0,
   marginTop : 5,
   marginBottom : 5,
-  borderWidth : 2,
+  borderLeftWidth : 3,
   height : 50,
   padding: 10,
-  borderColor : "black",
+  paddingTop: 13,
+  borderLeftColor : "black",
   bottom : 0,
   
 },
 
 linktext:{
 
-  textAlign: 'center'
+  textAlign: 'left'
 },
 
 citationBlock:{

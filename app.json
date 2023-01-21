@@ -9,24 +9,22 @@
     "splash": {
       "image": "./assets/splash-2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#AE142A"
+      "backgroundColor": "#a0282e"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/75a9028b-3560-4a03-a6db-6cd38bb16479"
+      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "icon": "./assets/appstore.png",
-      "bundleIdentifier": "com.HugoRiffaud.MySor"
+      "bundleIdentifier": "com.koudo.MySor"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/playstore.png",
-        "backgroundColor": "#AE142A"
+        "backgroundColor": "#a0282e"
       }
     },
     "web": {
@@ -36,9 +34,6 @@
       "eas": {
         "projectId": "75a9028b-3560-4a03-a6db-6cd38bb16479"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
     }
   }
 }
