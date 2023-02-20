@@ -1,28 +1,53 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const stylesLM = StyleSheet.create({
 
+  SafeAreaMode0: { 
+    flex:0, 
+    backgroundColor: "#DCDCDC"
+  },
+  
+  SafeAreaMode1: { 
+    flex:1, 
+    backgroundColor: "#DCDCDC"
+  },
 
+  button:{
+    backgroundColor: "#DCDCDC",
+  },
 
 MainComponent : {
   backgroundColor: "black",
   flex:1,
 },
 
-Row : {
-  height:50,
+SafeAreaMode: { flex:0, 
+  backgroundColor: '#181818' 
+},
+
+ModeButton:{
   position:"absolute",
-  bottom:"3%",
+  top:"0%",
+  right:"0%",
+
+},
+
+Row : {
+  height:70,
+  position:"absolute",
+  bottom:"0%",
   width : "100%",
-  backgroundColor: "white",
-  borderTopColor : "grey",
-  borderTopWidth: 2,
+  backgroundColor: "#DCDCDC",
+  borderTopColor : "#808080",
+  borderTopWidth: 1,
   flexDirection:"row"
 },
 
 RowIcon:{
   marginLeft:"auto",
   marginRight:"auto",
+  alignItems:"center",
+  textAlign:"center",
 },
 
 maincompLinks:{
@@ -39,9 +64,9 @@ imageB:{
 Title:{
   fontSize:25,
   letterSpacing:1,
-  marginBottom:3,
   marginBottom:20,
   textAlign: 'center',
+  color: "black",
   flex : 0,
 },
 
@@ -57,18 +82,23 @@ link:{
   marginRight : 0,
   marginTop : 5,
   marginBottom : 5,
-  borderLeftWidth : 3,
+  borderWidth : 1,
   height : 50,
-  padding: 10,
+  paddingBottom: 13,
+  paddingLeft: 13,
   paddingTop: 13,
-  borderLeftColor : "black",
-  bottom : 0,
-  
+  width: "100%",
+  borderColor : "#808080",
+  borderRadius : 15,
+  backgroundColor : "#DCDCDC",
+  flexDirection : "row",
 },
 
 linktext:{
-
-  textAlign: 'left'
+  fontSize: 15,
+  color : "black",
+  textAlign: 'left',
+  marginRight: "auto",
 },
 
 citationBlock:{
@@ -89,4 +119,4 @@ citationQuote:{
    
 });
 
-export { styles }
+export { stylesLM }

@@ -1,7 +1,7 @@
 import reactDom from 'react-dom';
 import { StyleSheet } from 'react-native';
 
-const CalendarMainCompStyle = StyleSheet.create({
+const CalendarMainCompStyleLM = StyleSheet.create({
 
 
 
@@ -114,7 +114,7 @@ TodayDateHeader:{
 
 
 body:{
-  backgroundColor: "white",
+  backgroundColor:"#DCDCDC",
   borderTopLeftRadius: 40,
   borderTopRightRadius: 40,
   borderWidth: 0,
@@ -148,6 +148,7 @@ NoEventText:{
   fontStyle:"italic",
   marginRight:"auto",
   marginLeft:"auto",
+  color:"black"
 },
 
 DayCard:{
@@ -161,8 +162,8 @@ DayCard:{
 },
 
 SelectedDayCard:{
-  backgroundColor: "#F0F0F0",
-  borderColor: "white",
+  backgroundColor: "#181818",
+  borderColor: "black",
   borderRadius: 40,
   borderWidth: 0,
   paddingTop:7,
@@ -194,6 +195,7 @@ DayNumber:{
   fontSize:20,
   fontWeight:"bold",
   marginBottom:7,
+  color:"#BFBFBF",
 },
 
 NoEvent:{
@@ -215,6 +217,7 @@ Event:{
   marginLeft:5,
   marginRight:5,
   marginBottom:5,
+  borderColor: "black"
 },
 
 Location:{
@@ -224,6 +227,7 @@ Location:{
   flexWrap: 'wrap',
   marginRight : "auto",
   maxWidth: 200,
+  color: "black"
 
 },
 
@@ -231,11 +235,12 @@ Summary:{
   flexShrink: 1,
   fontSize:13,
   marginRight : "auto",
-  
+  color: "black"
 },
 
 Time:{
   fontSize:13,
+  color: "black"
   
 },
 
@@ -246,6 +251,7 @@ scrollbar:{
 EventTitle:{
   letterSpacing:3,
   fontSize:17,
+  color: "black"
 },
 
 elevatedElement: {
@@ -257,4 +263,4 @@ elevatedElement: {
    
 });
 
-export { CalendarMainCompStyle }
+export { CalendarMainCompStyleLM }

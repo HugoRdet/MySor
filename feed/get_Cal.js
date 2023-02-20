@@ -1,7 +1,11 @@
 import { Text, View,Dimensions,Animated,ScrollView,SafeAreaView,Pressable,ActivityIndicator } from 'react-native';
-import React, { useEffect, useState , useRef,useMemo} from 'react';
+import React, { useEffect, useState , useRef,useMemo, Component} from 'react';
 import * as SQLite from 'expo-sqlite';
-import { CalendarMainCompStyle } from "./stylesheets/CalendarMainCompStyle";
+
+import { CalendarMainCompStyleDM } from "./stylesheets/CalendarMainCompStyleDM";
+import { CalendarMainCompStyleLM } from "./stylesheets/CalendarMainCompStyleLM";
+
+
 import Icon from 'react-native-vector-icons/Entypo';
 import { FlatList } from 'react-native-bidirectional-infinite-scroll';
 import DayRow from './DayRow.js';
@@ -17,11 +21,11 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-export default function Get_Cal() {
-  const [master_id, setmaster_id] = useState("DAC");          //master choisi
-  const [master_lvl, setmaster_lvl] = useState("M1");         //niveau M1 / M2
-  const [show, setShow] = useState(false);                    //page de chargement
-  
+export default function Get_Cal(props) {
+  const [master_id, setmaster_id] = useState("");          //master choisi
+  const [master_lvl, setmaster_lvl] = useState("");         //niveau M1 / M2
+  const [show, setShow] = useState(true);                    //page de chargement
+  const [DarkMode, setDarkMode] = useState(props.DarkMode);            //mode sombre
   
   const [events, setevents] = useState([]); 
   const [date_v, setdate_v] = useState(0); 
@@ -30,13 +34,14 @@ export default function Get_Cal() {
   const precdate_v=useRef(0)
   const date_month=useRef("")
   const date_year=useRef(2022)
+  const UsedStyle = useRef(props.DarkMode?CalendarMainCompStyleDM:CalendarMainCompStyleLM);
        
 
   
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 40,minimumViewTime:20 })
   const flatListRef = useRef(null)
   
-  
+ 
   const onViewRef = React.useRef((viewableItems)=> {
     
     if (viewableItems.viewableItems.length==1){
@@ -125,6 +130,8 @@ export default function Get_Cal() {
                 break;
               }
             }
+            
+            
 
             if (!placed){
               if (Event_title.length>2){
@@ -159,37 +166,37 @@ export default function Get_Cal() {
     return (
       <View>
         
-        <View style={CalendarMainCompStyle.Seleclvl} > 
+        <View style={UsedStyle.current.Seleclvl} > 
 
         {
           master_lvl==="M1"?
           <>
           <Pressable
         onPress={()=>{setmaster_lvl("M1")}}
-        style={CalendarMainCompStyle.Selectedlvl}
+        style={UsedStyle.current.Selectedlvl}
         >
-          <Text style={CalendarMainCompStyle.SelectedLvlTitle}>M1</Text>
+          <Text style={UsedStyle.current.SelectedLvlTitle}>M1</Text>
         </Pressable>
         <Pressable
         onPress={()=>{setmaster_lvl("M2")}}
-        style={CalendarMainCompStyle.UnSelectedlvl}
+        style={UsedStyle.current.UnSelectedlvl}
         >
-          <Text style={CalendarMainCompStyle.UnSelectedLvlTitle}>M2</Text>
+          <Text style={UsedStyle.current.UnSelectedLvlTitle}>M2</Text>
         </Pressable>
           </>
           :
           <>
           <Pressable
         onPress={()=>{setmaster_lvl("M1")}}
-        style={CalendarMainCompStyle.UnSelectedlvl}
+        style={UsedStyle.current.UnSelectedlvl}
         >
-          <Text style={CalendarMainCompStyle.UnSelectedLvlTitle}>M1</Text>
+          <Text style={UsedStyle.current.UnSelectedLvlTitle}>M1</Text>
         </Pressable>
         <Pressable
         onPress={()=>{setmaster_lvl("M2")}}
-        style={CalendarMainCompStyle.Selectedlvl}
+        style={UsedStyle.current.Selectedlvl}
         >
-          <Text style={CalendarMainCompStyle.SelectedLvlTitle}>M2</Text>
+          <Text style={UsedStyle.current.SelectedLvlTitle}>M2</Text>
         </Pressable>
           </>
         }
@@ -201,16 +208,16 @@ export default function Get_Cal() {
           master_id==="ANDROIDE"?
           <Pressable
         onPress={()=>{setmaster_id("ANDROIDE")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>ANDROIDE</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>ANDROIDE</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("ANDROIDE")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>ANDROIDE</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>ANDROIDE</Text>
         </Pressable>
         }
 
@@ -218,16 +225,16 @@ export default function Get_Cal() {
           master_id==="DAC"?
           <Pressable
         onPress={()=>{setmaster_id("DAC")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>DAC</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>DAC</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("DAC")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>DAC</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>DAC</Text>
         </Pressable>
         }
 
@@ -236,16 +243,16 @@ export default function Get_Cal() {
           master_id==="IMA"?
           <Pressable
         onPress={()=>{setmaster_id("IMA")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>IMA</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>IMA</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("IMA")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>IMA</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>IMA</Text>
         </Pressable>
         } 
 
@@ -253,16 +260,16 @@ export default function Get_Cal() {
           master_id==="BIM"?
           <Pressable
         onPress={()=>{setmaster_id("BIM")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>BIM</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>BIM</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("BIM")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>BIM</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>BIM</Text>
         </Pressable>
         } 
 
@@ -270,16 +277,16 @@ export default function Get_Cal() {
           master_id==="IQ"?
           <Pressable
         onPress={()=>{setmaster_id("IQ")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>IQ</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>IQ</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("IQ")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>IQ</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>IQ</Text>
         </Pressable>
         } 
 
@@ -288,16 +295,16 @@ export default function Get_Cal() {
           master_id==="RES"?
           <Pressable
         onPress={()=>{setmaster_id("RES")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>RES</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>RES</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("RES")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>RES</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>RES</Text>
         </Pressable>
         } 
 
@@ -305,16 +312,16 @@ export default function Get_Cal() {
           master_id==="SAR"?
           <Pressable
         onPress={()=>{setmaster_id("SAR")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>SAR</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>SAR</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("SAR")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>SAR</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>SAR</Text>
         </Pressable>
         } 
 
@@ -322,16 +329,16 @@ export default function Get_Cal() {
           master_id==="SESI"?
           <Pressable
         onPress={()=>{setmaster_id("SESI")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>SESI</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>SESI</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("SESI")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>SESI</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>SESI</Text>
         </Pressable>
         } 
 
@@ -339,16 +346,16 @@ export default function Get_Cal() {
           master_id==="SFPN"?
           <Pressable
         onPress={()=>{setmaster_id("SFPN")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>SFPN</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>SFPN</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("SFPN")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>SFPN</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>SFPN</Text>
         </Pressable>
         } 
 
@@ -356,16 +363,16 @@ export default function Get_Cal() {
           master_id==="STL"?
           <Pressable
         onPress={()=>{setmaster_id("STL")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>STL</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>STL</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("STL")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>STL</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>STL</Text>
         </Pressable>
         } 
 
@@ -373,16 +380,16 @@ export default function Get_Cal() {
           master_id==="STL-INSTA"?
           <Pressable
         onPress={()=>{setmaster_id("STL-INSTA")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>STL-INSTA</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>STL-INSTA</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("STL-INSTA")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>STL-INSTA</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>STL-INSTA</Text>
         </Pressable>
         } 
 
@@ -390,16 +397,16 @@ export default function Get_Cal() {
           master_id==="SFPN-AFTI"?
           <Pressable
         onPress={()=>{setmaster_id("SFPN-AFTI")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>SFPN-AFTI</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>SFPN-AFTI</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("SFPN-AFTI")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>SFPN-AFTI</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>SFPN-AFTI</Text>
         </Pressable>
         } 
 
@@ -407,16 +414,16 @@ export default function Get_Cal() {
           master_id==="RES-ITESCIA"?
           <Pressable
         onPress={()=>{setmaster_id("RES-ITESCIA")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>RES-ITESCIA</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>RES-ITESCIA</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("RES-ITESCIA")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>RES-ITESCIA</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>RES-ITESCIA</Text>
         </Pressable>
         } 
 
@@ -424,16 +431,16 @@ export default function Get_Cal() {
           master_id==="RES-EIT-Digital"?
           <Pressable
         onPress={()=>{setmaster_id("RES-EIT-Digital")}}
-        style={CalendarMainCompStyle.Selecmaster}
+        style={UsedStyle.current.Selecmaster}
         >
-          <Text style={CalendarMainCompStyle.SMasterdrawer}>RES-EIT-Digital</Text>
+          <Text style={UsedStyle.current.SMasterdrawer}>RES-EIT-Digital</Text>
         </Pressable>
           :
           <Pressable
         onPress={()=>{setmaster_id("RES-EIT-Digital")}}
-        style={CalendarMainCompStyle.UnSelecmaster}
+        style={UsedStyle.current.UnSelecmaster}
         >
-          <Text style={CalendarMainCompStyle.Masterdrawer}>RES-EIT-Digital</Text>
+          <Text style={UsedStyle.current.Masterdrawer}>RES-EIT-Digital</Text>
         </Pressable>
         } 
 
@@ -445,10 +452,26 @@ export default function Get_Cal() {
     );
   };
 
+  
+  const test =async () =>{
+    await req_events(master_id,master_lvl,0,7)
+    console.log("req lancée")
+  }
 
-    
+
+  const procedure= async ()=>{
+        await Update_DB(master_id,master_lvl,test)
+      }
  
   useEffect(() => {
+    console.log("master ",master_id)
+    console.log("lvl ",master_lvl)
+    if (master_lvl===""){
+      setShow(false)
+    }else{
+      storeData("MasterID", master_id)
+      storeData("MasterLVL", master_lvl)
+
 
     //mise à jour de la date
     let tmp_date= new Date();
@@ -457,7 +480,7 @@ export default function Get_Cal() {
     set_month(tmp_month,date_month)
     date_year.current=tmp_date.getFullYear()
     
-    //mise à jour des données si t>15min
+    //mise à jour des données si t>30min
     getData("@date_de_chargement_"+master_id+"_"+master_lvl).then((value)=>{
     let maintenant = new Date()
     
@@ -469,6 +492,8 @@ export default function Get_Cal() {
         storeData("@date_de_chargement_"+master_id+"_"+master_lvl,String(maintenant.toISOString()))
         setShow(false)
         console.log("rechargement de la BD "+master_id+" "+master_lvl)
+        procedure()
+        
         
       }else{
         console.log("non rechargement de la BD "+master_id+" "+master_lvl)
@@ -481,9 +506,18 @@ export default function Get_Cal() {
       console.log("rechargement de la BD "+master_id+" "+master_lvl)
       storeData("@date_de_chargement_"+master_id+"_"+master_lvl,String( maintenant.toISOString()))
       setShow(false)
+      procedure()
+      
     }
       
     })
+
+    }
+    
+
+    
+
+    
   
   }, [master_id,master_lvl]);
 
@@ -492,25 +526,38 @@ export default function Get_Cal() {
     precdate_v.current=date_v;
   }, [date_v]);
   
+  useEffect(() => {
+    if (!show){
+      setShow(true)
+    }
+    
+  }, [events]);
 
   useEffect(() => {
-    
-    if (!show){
-
-      const procedure= async ()=>{
-        await Update_DB(master_id,master_lvl).then(async ()=>{
-          
-          await req_events(master_id,master_lvl,0,7).then(()=>{
-            
-            setShow(true)
-          })
-        });
+    getData("MasterID").then((value) => {
+      if (value !== "no value") {
+        console.log(value)
+        setmaster_id(value)
+        
+      }else{
+        setmaster_id("DAC");
       }
+    });
 
-      procedure()
-      
-    }
+    getData("MasterLVL").then((value) => {
+      if (value !== "no value") {
+        console.log(value)
+        setmaster_lvl(value)
+      }else{
+        setmaster_lvl("M1")
+      }
+    });
+  }, []);
   
+  
+  useEffect(() => {
+    
+
   }, [show]);
 
   
@@ -521,11 +568,11 @@ export default function Get_Cal() {
 
     if (day_events.length==0){
       return(
-        <View  style={CalendarMainCompStyle.Schedule} key={item.item.date+" child"}>
+        <View  style={UsedStyle.current.Schedule} key={item.item.date+" child"}>
           
-          <View style={[CalendarMainCompStyle.NoEvent,{width:windowWidth-10}]}>
+          <View style={[UsedStyle.current.NoEvent,{width:windowWidth-10}]}>
             
-            <Text style={CalendarMainCompStyle.NoEventText}>There is nothing for the moment</Text>
+            <Text style={UsedStyle.current.NoEventText}>There is nothing for the moment</Text>
             
           </View>
        </View>
@@ -533,25 +580,26 @@ export default function Get_Cal() {
 
     }else{
       return(
-        <View style={CalendarMainCompStyle.Schedule} key={item.item.date+" child"} >
+        <View style={UsedStyle.current.Schedule} key={item.item.date+" child"} >
         <ScrollView>
         {day_events.map( (element) => {
           
         return (
-          <View  style={[CalendarMainCompStyle.Event,{width:windowWidth-10}]} key={item.item.date+"   "+element.title+"  "+element.DTSTART.getHours} >
-            <Text style={CalendarMainCompStyle.EventTitle}>{element.title}</Text>
+          <View  style={[UsedStyle.current.Event,{width:windowWidth-10}]} key={item.item.date+"   "+element.title+"  "+element.DTSTART.getHours} >
+            <Text style={UsedStyle.current.EventTitle}>{element.title}</Text>
             {element.events.map((tmp_elem)=>{
 
               return(
               <View style={{ flexDirection : "row",marginTop:10}} key={item.item.date+" "+element.title+"   "+tmp_elem.SUMMARY+"  "+tmp_elem.LOCATION+"  "+tmp_elem.DTSTART.getHours()}>
                 
                 <View style={{ flexDirection : "column",marginTop:2,marginRight:30}}>
-                  <Text style={CalendarMainCompStyle.Time}> {tmp_elem.DTSTART.getHours()}h{tmp_elem.DTSTART.getMinutes()}{tmp_elem.DTSTART.getMinutes()==0?"0":<></>}</Text>
-                  <Text style={CalendarMainCompStyle.Time}> {tmp_elem.DTEND.getHours()}h{tmp_elem.DTEND.getMinutes()}{tmp_elem.DTEND.getMinutes()==0?"0":<></>}</Text>
+                  <Text style={UsedStyle.current.Time}> {tmp_elem.DTSTART.getHours()}h{tmp_elem.DTSTART.getMinutes()}{tmp_elem.DTSTART.getMinutes()==0?"0":<></>}</Text>
+                  <Text style={UsedStyle.current.Time}> {tmp_elem.DTEND.getHours()}h{tmp_elem.DTEND.getMinutes()}{tmp_elem.DTEND.getMinutes()==0?"0":<></>}</Text>
                 </View>
                 <View style={{ flexDirection : "column",marginTop:2}}>
-                <Text style={CalendarMainCompStyle.Summary}>{tmp_elem.SUMMARY}</Text>
-                  <Text style={CalendarMainCompStyle.Location}><Icon name='location'  color="black" backgroundColor="white"/>{tmp_elem.LOCATION}</Text>
+                <Text style={UsedStyle.current.Summary}>{tmp_elem.SUMMARY}</Text>
+                  <Text style={UsedStyle.current.Location}>{DarkMode?<Icon name='location'  color= "#BFBFBF" backgroundColor="white"/> :  <Icon name='location'  color= "black" backgroundColor="white"/>
+                  } {tmp_elem.LOCATION}</Text>
                 </View>
               
               
@@ -583,13 +631,13 @@ export default function Get_Cal() {
   
   return (
     <>
-    <View style={CalendarMainCompStyle.header}>
-      <View style={CalendarMainCompStyle.headerleft_side}>
-        <Text style={CalendarMainCompStyle.mainTitle}>{master_lvl} {master_id}</Text>
-        <Text style={CalendarMainCompStyle.TodayDateHeader}>{date_month.current}  {date_year.current}</Text>
+    <View style={UsedStyle.current.header}>
+      <View style={UsedStyle.current.headerleft_side}>
+        <Text style={UsedStyle.current.mainTitle}>{master_lvl} {master_id}</Text>
+        <Text style={UsedStyle.current.TodayDateHeader}>{date_month.current}  {date_year.current}</Text>
       </View>
 
-      <View style={CalendarMainCompStyle.headerright_side}>
+      <View style={UsedStyle.current.headerright_side}>
       
           
         
@@ -615,17 +663,17 @@ export default function Get_Cal() {
           overlay={false}
           opacity={0.4}
         >
-    <View style={CalendarMainCompStyle.body}>
+    <View style={UsedStyle.current.body}>
 
      
     
 
       
     
-      <View style={CalendarMainCompStyle.DayRowG}>
-      <DayRow date_v={date_v} precdate_v={precdate_v} flatListRef={flatListRef} current_index={current_index} />
+      <View style={UsedStyle.current.DayRowG}>
+      <DayRow date_v={date_v} precdate_v={precdate_v} flatListRef={flatListRef} current_index={current_index} UsedStyle={UsedStyle.current} />
       </View>
-      <View style={CalendarMainCompStyle.ScheduleG}>
+      <View style={UsedStyle.current.ScheduleG}>
       {show===true?
       <FlatList
       ref={flatListRef}
@@ -635,7 +683,7 @@ export default function Get_Cal() {
       horizontal={true}
       data={events}
       extraData={events}
-      initialNumToRender={7}
+      initialNumToRender={10}
       viewabilityConfig={viewConfigRef.current}
       onViewableItemsChanged={onViewRef.current}
       renderItem={ memoizedValue }

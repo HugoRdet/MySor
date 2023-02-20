@@ -3,10 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import base64 from 'react-native-base64';
-import ical from 'cal-parser';
 import * as SQLite from 'expo-sqlite';
-
-
+import { parse_Cal } from './cal_parser';
 
 async function Add_event_db(event,master_id,lvl){
   
@@ -18,6 +16,7 @@ async function Add_event_db(event,master_id,lvl){
   if (d_limit>event.dtstart.value){
     return;
   }
+  
   
   let new_obj={
     dtend : new Date(event.dtend.value).toISOString().slice(0, 19).replace('T', ' '),
@@ -120,7 +119,7 @@ async function Add_event_db(event,master_id,lvl){
   
 }
 
-export default async function Update_DB(master_id,lvl) {
+export default async function Update_DB(master_id,lvl,callback) {
   
   const username= "student.master";
   const password= "guest"
@@ -163,55 +162,64 @@ export default async function Update_DB(master_id,lvl) {
     await api.get(chemin)
     .then( async response => {
       
-      await global.dbCalDavEvents.transaction(tx => {
-        tx.executeSql('DELETE FROM CalDavEvents WHERE MASTER==(?) AND LVL==(?)', [master_id,lvl],
-          (txObj, resultSet) =>{},
+      await global.dbCalDavEvents.transaction(async tx => { 
+        await tx.executeSql('DELETE FROM CalDavEvents WHERE MASTER==(?) AND LVL==(?)', [master_id,lvl],
+          async (txObj, resultSet) =>{
+
+            const parsed=parse_Cal(response.data)
+
+            for (nb_tmp=0;nb_tmp<parsed.events.length;nb_tmp++){
+        
+              if (parsed.events[nb_tmp].recurrenceRule!=undefined){
+                
+                  tmp_date_until=new Date(parsed.events[nb_tmp].recurrenceRule.options.until)
+                  tmp_dtstart=new Date(parsed.events[nb_tmp].dtstart.value)
+                  tmp_dtend=new Date(parsed.events[nb_tmp].dtend.value)
+                  
+                  while (tmp_date_until>tmp_dtstart) {
+                    /*
+                    if ((tmp_dtstart.getFullYear()>=2022)&&(parsed.events[nb_tmp].summary.value.includes('TD1'))){
+                      console.log(parsed.events[nb_tmp].summary.value,"   ",tmp_dtstart)
+                    }*/
+                    await Add_event_db(parsed.events[nb_tmp],master_id,lvl)
+                    
+                    
+                    tmp_dtstart.setDate(tmp_dtstart.getDate()+7)
+                    tmp_dtend.setDate(tmp_dtend.getDate()+7)
+                    
+                    
+                    parsed.events[nb_tmp].dtstart.value=tmp_dtstart
+                    parsed.events[nb_tmp].dtend.value=tmp_dtend
+                    
+                    
+                    
+                  }
+                
+                
+              }
+              
+              else{
+                await Add_event_db(parsed.events[nb_tmp],master_id,lvl);
+              }  
+              
+              
+              
+                      
+              
+            }
+
+            
+            callback()
+
+          },
           (txObj, error) => {console.log('Error', error)});
       })
       
-      const parsed=ical.parseString(response.data)
       
       
       
-      for (nb_tmp=0;nb_tmp<parsed.events.length;nb_tmp++){
-        
-        if (parsed.events[nb_tmp].recurrenceRule!=undefined){
-          
-            tmp_date_until=new Date(parsed.events[nb_tmp].recurrenceRule.options.until)
-            tmp_dtstart=new Date(parsed.events[nb_tmp].dtstart.value)
-            tmp_dtend=new Date(parsed.events[nb_tmp].dtend.value)
-            
-            while (tmp_date_until>tmp_dtstart) {
-              /*
-              if ((tmp_dtstart.getFullYear()>=2022)&&(parsed.events[nb_tmp].summary.value.includes('TD1'))){
-                console.log(parsed.events[nb_tmp].summary.value,"   ",tmp_dtstart)
-              }*/
-              await Add_event_db(parsed.events[nb_tmp],master_id,lvl)
-              
-              
-              tmp_dtstart.setDate(tmp_dtstart.getDate()+7)
-              tmp_dtend.setDate(tmp_dtend.getDate()+7)
-              
-              
-              parsed.events[nb_tmp].dtstart.value=tmp_dtstart
-              parsed.events[nb_tmp].dtend.value=tmp_dtend
-              
-              
-              
-            }
-          
-          
-        }
-        
-        else{
-          await Add_event_db(parsed.events[nb_tmp],master_id,lvl);
-        }  
-        
-        
-        
-                
-        
-      }
+      
+      
     })
     .catch(err => {
       console.log(err)

@@ -1,7 +1,6 @@
 
 import { Text, View,Dimensions,Animated } from 'react-native';
 import React, { useEffect, useState , useRef,useMemo} from 'react';
-import { CalendarMainCompStyle } from "./stylesheets/CalendarMainCompStyle";
 import { FlatList } from 'react-native-bidirectional-infinite-scroll';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -18,6 +17,7 @@ export default function DayRow(props) {
     const prevweek_v=useRef(0)
     const flatListRef = useRef(null)
     const currentweek=useRef(0)
+    const UsedStyle = useRef(props.UsedStyle);
 
     const onViewRef = React.useRef((viewableItems)=> {
         if (viewableItems.viewableItems.length==1){              
@@ -116,89 +116,89 @@ export default function DayRow(props) {
         let sun_date_n=tmp_date.getDate();
     
         return(
-            <View style={[CalendarMainCompStyle.DayRow,{width:windowWidth}]}>
+            <View style={[UsedStyle.current.DayRow,{width:windowWidth}]}>
       
               {(selected_day===1)? 
-              <View style={CalendarMainCompStyle.SelectedDayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Mon</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{mon_date_n}</Text>
+              <View style={UsedStyle.current.SelectedDayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Mon</Text>
+                <Text style={UsedStyle.current.DayNumber}>{mon_date_n}</Text>
               </View>
                 :
-              <View style={CalendarMainCompStyle.DayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Mon</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{mon_date_n}</Text>
+              <View style={UsedStyle.current.DayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Mon</Text>
+                <Text style={UsedStyle.current.DayNumber}>{mon_date_n}</Text>
               </View>
               }
       
               {(selected_day===2)? 
-              <View style={CalendarMainCompStyle.SelectedDayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Tue</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{tue_date_n}</Text>
+              <View style={UsedStyle.current.SelectedDayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Tue</Text>
+                <Text style={UsedStyle.current.DayNumber}>{tue_date_n}</Text>
               </View>
                 :
-              <View style={CalendarMainCompStyle.DayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Tue</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{tue_date_n}</Text>
+              <View style={UsedStyle.current.DayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Tue</Text>
+                <Text style={UsedStyle.current.DayNumber}>{tue_date_n}</Text>
               </View>
               }
       
               {(selected_day===3)? 
-              <View style={CalendarMainCompStyle.SelectedDayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Wed</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{wed_date_n}</Text>
+              <View style={UsedStyle.current.SelectedDayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Wed</Text>
+                <Text style={UsedStyle.current.DayNumber}>{wed_date_n}</Text>
               </View>
                 :
-              <View style={CalendarMainCompStyle.DayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Wed</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{wed_date_n}</Text>
+              <View style={UsedStyle.current.DayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Wed</Text>
+                <Text style={UsedStyle.current.DayNumber}>{wed_date_n}</Text>
               </View>
               }
       
             {(selected_day===4)? 
-              <View style={CalendarMainCompStyle.SelectedDayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Thu</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{thu_date_n}</Text>
+              <View style={UsedStyle.current.SelectedDayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Thu</Text>
+                <Text style={UsedStyle.current.DayNumber}>{thu_date_n}</Text>
               </View>
                 :
-              <View style={CalendarMainCompStyle.DayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Thu</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{thu_date_n}</Text>
+              <View style={UsedStyle.current.DayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Thu</Text>
+                <Text style={UsedStyle.current.DayNumber}>{thu_date_n}</Text>
               </View>
               }
       
             {(selected_day===5)? 
-              <View style={CalendarMainCompStyle.SelectedDayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Fri</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{fri_date_n}</Text>
+              <View style={UsedStyle.current.SelectedDayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Fri</Text>
+                <Text style={UsedStyle.current.DayNumber}>{fri_date_n}</Text>
               </View>
                 :
-              <View style={CalendarMainCompStyle.DayCard}>
-                <Text style={CalendarMainCompStyle.DayAbv}>Fri</Text>
-                <Text style={CalendarMainCompStyle.DayNumber}>{fri_date_n}</Text>
+              <View style={UsedStyle.current.DayCard}>
+                <Text style={UsedStyle.current.DayAbv}>Fri</Text>
+                <Text style={UsedStyle.current.DayNumber}>{fri_date_n}</Text>
               </View>
               }
       
               {(selected_day===6)? 
-                <View style={CalendarMainCompStyle.SelectedDayCard}>
-                  <Text style={CalendarMainCompStyle.DayAbv}>Sat</Text>
-                  <Text style={CalendarMainCompStyle.DayNumber}>{sat_date_n}</Text>
+                <View style={UsedStyle.current.SelectedDayCard}>
+                  <Text style={UsedStyle.current.DayAbv}>Sat</Text>
+                  <Text style={UsedStyle.current.DayNumber}>{sat_date_n}</Text>
                 </View>
                 :
-                <View style={CalendarMainCompStyle.DayCard}>
-                  <Text style={CalendarMainCompStyle.DayAbv}>Sat</Text>
-                  <Text style={CalendarMainCompStyle.DayNumber}>{sat_date_n}</Text>
+                <View style={UsedStyle.current.DayCard}>
+                  <Text style={UsedStyle.current.DayAbv}>Sat</Text>
+                  <Text style={UsedStyle.current.DayNumber}>{sat_date_n}</Text>
                 </View>
               }
       
               {(selected_day===0)? 
-                <View style={CalendarMainCompStyle.SelectedDayCard}>
-                  <Text style={CalendarMainCompStyle.DayAbv}>Sun</Text>
-                  <Text style={CalendarMainCompStyle.DayNumber}>{sun_date_n}</Text>
+                <View style={UsedStyle.current.SelectedDayCard}>
+                  <Text style={UsedStyle.current.DayAbv}>Sun</Text>
+                  <Text style={UsedStyle.current.DayNumber}>{sun_date_n}</Text>
                 </View>
                 :
-                <View style={CalendarMainCompStyle.DayCard}>
-                  <Text style={CalendarMainCompStyle.DayAbv}>Sun</Text>
-                  <Text style={CalendarMainCompStyle.DayNumber}>{sun_date_n}</Text>
+                <View style={UsedStyle.current.DayCard}>
+                  <Text style={UsedStyle.current.DayAbv}>Sun</Text>
+                  <Text style={UsedStyle.current.DayNumber}>{sun_date_n}</Text>
                 </View>
               }
       
