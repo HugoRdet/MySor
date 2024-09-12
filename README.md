@@ -1,4 +1,5 @@
-# MySor <img src="assets/Assets.xcassets/AppIcon.appiconset/1024.png" alt="App Icon" align="right" width="50"/>
+# MySor <img src="assets/Assets.xcassets/AppIcon.appiconset/1024.png" alt="App Icon" align="right" width="125" style="border-radius: 50%; padding-right: 50px;"/>
+
 The "Mysor" mobile application is designed for students in the Master of Computer Science at Sorbonne University. It allows users to quickly view their updated timetable with the university's timetable and easily access important links such as grades and their student email.
 
 <p align="center">
