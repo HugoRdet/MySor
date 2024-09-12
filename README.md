@@ -3,9 +3,9 @@
 The "Mysor" mobile application is designed for students in the Master of Computer Science at Sorbonne University. It allows users to quickly view their updated timetable with the university's timetable and easily access important links such as grades and their student email.
 
 <p align="center">
-  <img src="./assets/m0.png" alt="Image 1" width="300"/>
-  <img src="./assets/m1.png" alt="Image 2" width="300"/>
-  <img src="./assets/m2.png" alt="Image 3" width="300"/>
+  <img src="./assets/m0.png" alt="Image 1" width="175"/>
+  <img src="./assets/m1.png" alt="Image 2" width="175"/>
+  <img src="./assets/m2.png" alt="Image 3" width="175"/>
 </p>
 
 
